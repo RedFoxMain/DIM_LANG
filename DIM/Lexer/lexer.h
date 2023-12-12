@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include <vector>
 #include <string>
 #include <map>
@@ -10,17 +11,19 @@
 class Lexer {
 public:
 	Token structure_token;
-	
+
 	explicit Lexer(std::string& original_text) : text_(original_text) { Advance(); } // Конструктор
+
 	void Advance(); // Следующий символ
 	Token GetString(int first_quote_position, int second_quote_position); // Получить строку
 	Token GetCommand(); // Получить команду
 	Token GetDigit(); // Получить цыфру
 	std::vector<Token> Lex(); // Разобрать текст на токены
-	
+	~Lexer() {} // Деструктор
+
 private:
 	// Зарегистрированные команды
-	std::string REGISTRY_COMMANDS_[8] = { "out", "in", "len", "while", "for", "if", "else", "var"};
+	std::string REGISTRY_COMMANDS_[13] = { "out", "in", "len", "while", "for", "if", "else", "boolean", "int", "float", "string", "len" };
 	// Таблица токенов
 	std::map<char, Type> TOKEN_TABLE_ = {
 		{Math_Operation_Tokens::ADD_TOKEN, Type::TYPE_ADD},						// +
@@ -38,6 +41,23 @@ private:
 		{Separator_Tokens::EOL_TOKEN, Type::TYPE_EOL},							// ;
 		{Separator_Tokens::COMMENT_TOKEN, Type::TYPE_COMMENT},					// ~
 		{Logic_Operation_Tokens::EQUAL_TOKEN, Type::TYPE_EQUAL}					// =
+	};
+
+	std::map<std::string, std::string> WordsCode_ = {
+		{"out", "W1"}, {"in", "W2"}, {"if", "W3"},
+		{"else", "W4"}, {"while", "W5"}, {"for", "W6"},
+		{"len", "W7"}, {"int", "W8"}, {"float", "W9"},
+		{"bolean", "W10"}
+	};
+	std::map<char, std::string> SeparatorCode_ = {
+		{'{', "S1"}, {'}', "S2"}, {'(', "S3"},
+		{')', "S4"}, {';', "S5"}, {'\n', "S6"},
+		{'\t', "S7"}, {'[', "S8"}, {']', "S9"}
+	};
+	std::map<char, std::string> MathAndLogicOperationCode_ = {
+		{'+', "O1"}, {'-', "O2"}, {'/', "O3"},
+		{'*', "O4"}, {'%', "O5"},
+		{'>', "L1"}, {'<', "L2"}, {'=', "L3"}
 	};
 	std::string text_; // код 
 	int position_ = -1; // Позиция элемента
