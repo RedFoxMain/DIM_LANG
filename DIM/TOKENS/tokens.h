@@ -1,4 +1,6 @@
 #pragma once
+#include <map>
+#include <string>
 
 // Тип токена
 enum Type {
@@ -24,6 +26,8 @@ enum Type {
 	TYPE_EQUAL_EQUAL,
 	TYPE_NOT_EQUAL,
 	TYPE_EQUAL,
+	TYPE_OR,
+	TYPE_AND,
 	TYPE_LSB,				// [
 	TYPE_RSB,				// ]
 	TYPE_LRB,				// (
@@ -35,6 +39,7 @@ enum Type {
 // Сама структура токена
 struct Token {
 	Type type = Type::TYPE_DEFAULT;
+	std::string code = "";
 	std::string value = "";
 	int token_position = 0;
 };
@@ -52,7 +57,9 @@ enum Logic_Operation_Tokens {
 	GREATER_TOKEN		= 62,
 	LESS_TOKEN			= 60,
 	EQUAL_TOKEN			= 61,
-	FACTORIAL_TOKEN		= 33
+	FACTORIAL_TOKEN		= 33,
+	OR				    = 124,
+	AND					= 38
 };
 
 // Скобки
