@@ -1,6 +1,5 @@
-#include <iostream>
-
 #include "lexer.h"
+#include "error.h"
 
 // Имплементация Advance
 void Lexer::Advance() {
@@ -17,6 +16,7 @@ Token Lexer::GetString(int first_quote_position, int second_quote_position) {
 	}
 	
 	structure_token.type = Type::TYPE_STRING;
+	structure_token.code = temp_string;
 	structure_token.value = temp_string;
 	structure_token.token_position = position_ - text_.length();
 	return structure_token;
@@ -36,16 +36,17 @@ Token Lexer::GetCommand() {
 	
 	if (is_registry_command){
 		structure_token.type = Type::TYPE_COMMAND;
+		structure_token.code = WordsCode_[temp_string];
 		structure_token.value = temp_string;
 		structure_token.token_position = position_ - temp_string.length();
 		return structure_token;
 	}else {
 		// Если temp_string нет в REGISTRY_COMMANDS_ вероятно это переменная
 		structure_token.type = Type::TYPE_VARIBLE;
+		structure_token.code = temp_string;
 		structure_token.value = temp_string;
 		structure_token.token_position = position_ - temp_string.length();
 		return structure_token;
-		
 	}
 } 
 
@@ -60,6 +61,7 @@ Token Lexer::GetDigit() {
 	bool is_float = (temp_digit.find(Separator_Tokens::DOT_TOKEN) != std::string::npos);
 
 	structure_token.type = is_float ? Type::TYPE_FLOAT : Type::TYPE_INT;
+	structure_token.code = temp_digit;
 	structure_token.value = temp_digit;
 	structure_token.token_position = position_ - temp_digit.length();
 	return structure_token;
@@ -82,9 +84,11 @@ std::vector<Token> Lexer::Lex() {
 		// Получить >=
 		if (current_char_ == Logic_Operation_Tokens::GREATER_TOKEN && text_[position_+1] == Logic_Operation_Tokens::EQUAL_TOKEN) {
 			structure_token.type = Type::TYPE_GREATER_EQUAL;
+			structure_token.code = "L4";
 			structure_token.value = ">=";
 			structure_token.token_position = position_;
 			tokens.push_back(structure_token);
+			Advance();
 			Advance();
 			continue;
 		}
@@ -92,9 +96,11 @@ std::vector<Token> Lexer::Lex() {
 		// Получить <=
 		if (current_char_ == Logic_Operation_Tokens::LESS_TOKEN && text_[position_ + 1] == Logic_Operation_Tokens::EQUAL_TOKEN) {
 			structure_token.type = Type::TYPE_LESS_EQUAL;
+			structure_token.code = "L5";
 			structure_token.value = "<=";
 			structure_token.token_position = position_;
 			tokens.push_back(structure_token);
+			Advance();
 			Advance();
 			continue;
 		}
@@ -102,9 +108,11 @@ std::vector<Token> Lexer::Lex() {
 		// Получить ==
 		if (current_char_ == Logic_Operation_Tokens::EQUAL_TOKEN && text_[position_ + 1] == Logic_Operation_Tokens::EQUAL_TOKEN) {
 			structure_token.type = Type::TYPE_EQUAL_EQUAL;
+			structure_token.code = "L6";
 			structure_token.value = "==";
 			structure_token.token_position = position_;
 			tokens.push_back(structure_token);
+			Advance();
 			Advance();
 			continue;
 		}
@@ -112,19 +120,48 @@ std::vector<Token> Lexer::Lex() {
 		// Получить !=
 		if (current_char_ == Logic_Operation_Tokens::FACTORIAL_TOKEN && text_[position_ + 1] == Logic_Operation_Tokens::EQUAL_TOKEN) {
 			structure_token.type = Type::TYPE_NOT_EQUAL;
+			structure_token.code = "L7";
 			structure_token.value = "!=";
 			structure_token.token_position = position_;
 			tokens.push_back(structure_token);
 			Advance();
+			Advance();
 			continue;
 		}
+
+		// Получить ||
+		if (current_char_ == Logic_Operation_Tokens::OR && text_[position_ + 1] == Logic_Operation_Tokens::OR) {
+			structure_token.type = Type::TYPE_OR;
+			structure_token.code = "L8";
+			structure_token.value = "||";
+			structure_token.token_position = position_;
+			tokens.push_back(structure_token);
+			Advance();
+			Advance();
+			continue;
+		}
+
+		// Получить &&
+		if (current_char_ == Logic_Operation_Tokens::AND && text_[position_ + 1] == Logic_Operation_Tokens::AND) {
+			structure_token.type = Type::TYPE_AND;
+			structure_token.code = "L9";
+			structure_token.value = "&&";
+			structure_token.token_position = position_;
+			tokens.push_back(structure_token);
+			Advance();
+			Advance();
+			continue;
+		}
+
 
 		// Получить ++
 		if (current_char_ == Math_Operation_Tokens::ADD_TOKEN && text_[position_ + 1] == Math_Operation_Tokens::ADD_TOKEN) {
 			structure_token.type = Type::TYPE_INCREMENT;
+			structure_token.code = "O6";
 			structure_token.value = "++";
 			structure_token.token_position = position_;
 			tokens.push_back(structure_token);
+			Advance();
 			Advance();
 			continue;
 		}
@@ -132,9 +169,11 @@ std::vector<Token> Lexer::Lex() {
 		// Получить --
 		if (current_char_ == Math_Operation_Tokens::SUBDIVIDE_TOKEN && text_[position_ + 1] == Math_Operation_Tokens::SUBDIVIDE_TOKEN) {
 			structure_token.type = Type::TYPE_DECREMENT;
+			structure_token.code = "O7";
 			structure_token.value = "--";
 			structure_token.token_position = position_;
 			tokens.push_back(structure_token);
+			Advance();
 			Advance();
 			continue;
 		}
@@ -156,19 +195,19 @@ std::vector<Token> Lexer::Lex() {
 		// Собрать команду
 		if (std::isalpha(current_char_)) {
 			tokens.push_back(GetCommand());
-
 			continue;
 		}
 
 		// Присвоить тип, значение, позицию оставшимся элементам
 		if (TOKEN_TABLE_.count(current_char_) > 0) {
 			structure_token.type = TOKEN_TABLE_[current_char_];
+			structure_token.code = (SeparatorCode_.count(current_char_) > 0) ? SeparatorCode_[current_char_] : MathAndLogicOperationCode_[current_char_];
 			structure_token.value = current_char_;
 			structure_token.token_position = position_;
 			tokens.push_back(structure_token);
 		}else {
 			// бросить ошибку о неизвестном токене
-			std::cout << "Неизвестный токен: " << position_ << '\n';
+			std::cout << UnknownCharacterError::RiseUnknownCharacterError("Неизвестный токен: " + std::to_string((char)current_char_-'\0') + "\nПозиция: " + std::to_string(structure_token.token_position)) << '\n';
 			exit(1);
 		}
 		Advance(); // Следующий символ
