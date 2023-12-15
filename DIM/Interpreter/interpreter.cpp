@@ -1,9 +1,10 @@
 #include <iostream>
+#include <fstream> 
+#include <chrono>
 
 #define DEBUG true
 
 #include "lexer.h"
-
 
 void PrintLexerResult(std::vector<Token> tokens) {
 	for (size_t i = 0; i < tokens.size(); ++i) {
@@ -12,18 +13,28 @@ void PrintLexerResult(std::vector<Token> tokens) {
 			std::cout << '\n';
 		}
 	}
+	std::cout << '\n';
 }
-
 
 int main() {
 	std::setlocale(LC_ALL, "Ru");
-	std::string text = "int a = 5;\nif((a >= 5 || a < 10) && a != 9){\nout \"Yes\";}\n";
-
-	Lexer lexer(text);
-
-	std::vector<Token>tokens = lexer.Lex();
+	std::string text;
+	std::string line;
+	std::ifstream file("dim_code.dim");
+	if (file.is_open()) {
+		while (file >> line) {
+			text += line + ' ';
+		}
+	}else{ file.close(); }
 	
-	if (DEBUG) { PrintLexerResult(tokens); }
+	auto start_time = std::chrono::high_resolution_clock::now();
+	Lexer lexer(text);
+	auto end_time = std::chrono::high_resolution_clock::now();
 
+	if (DEBUG) { PrintLexerResult(lexer.Lex()); }
+
+	std::chrono::duration<double, std::milli> duration = end_time - start_time;
+
+	std::cout << "Выполнено без ошибок за: " << duration.count() << " милесекунд" << '\n'; // Лучшее время 0,2345 что в секундах равно 0,00023
 	return 0;
 }
