@@ -15,6 +15,7 @@ public:
 	Token structure_token; // Структура токена
 	std::map<std::string, std::string> CODE_VARIBLES; // Сигнатуры переменных в DIM коде
 	std::map<std::string, std::string> CODE_STRING_LITERALS; // Сигнатуры строк в DIM коде
+	std::map<std::string, std::string> CODE_DIGITS; // Сигнатуры цифр в DIM коде
 	void Advance(int step = 1); // Следующий символ
 	Token GetString(int first_quote_position, int second_quote_position); // Получить строку
 	Token GetCommand(); // Получить команду
@@ -23,7 +24,7 @@ public:
 private:
 	
 	// Зарегистрированные команды
-	std::string REGISTRY_COMMANDS_[15] = { "out", "in", "len", "while", "for", "if", "else", "boolean", "int", "float", "string", "len", "or", "and"};
+	std::string REGISTRY_COMMANDS_[17] = { "out", "in", "len", "while", "for", "if", "else", "boolean", "int", "float", "string", "null", "Main", "len", "or", "and"};
 	// Таблица токенов
 	std::map<char, Type> TOKEN_TABLE_ = {
 		{Math_Operation_Tokens::ADD_TOKEN, Type::TYPE_ADD},						// +
@@ -47,7 +48,7 @@ private:
 		{"out", "W1"}, {"in", "W2"}, {"if", "W3"},
 		{"else", "W4"}, {"while", "W5"}, {"for", "W6"},
 		{"len", "W7"}, {"int", "W8"}, {"float", "W9"},
-		{"bolean", "W10"}
+		{"bolean", "W10"}, {"null", "W11"}, {"Main", "W12"}
 	};
 	std::map<char, std::string> SeparatorCode_ = {
 		{'{', "S1"}, {'}', "S2"}, {'(', "S3"},
@@ -66,6 +67,7 @@ private:
 	};
 	int varible_count_ = 0; // счетчик переменных
 	int string_literals_count_ = 0; // счетчик строковых литералов
+	int digit_count_ = 0; // счетчик цифр
 	std::string text_; // код 
 	int position_ = -1; // Позиция элемента
 	unsigned char current_char_ = '\0'; // Текущий символ
