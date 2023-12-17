@@ -1,8 +1,10 @@
-int num = 5;
-if((num >= 5 or num < 10) and num != 9){
-   out "Yes";
-   num--;
-}else{
-   out "No";
-   num++;
+null Main(){
+	int num = 5;
+	if((num >= 5 or num < 10) and num != 9){
+		out "Yes";
+		num--;
+	}else{
+		out "No";
+		num++;
+	}
 }
