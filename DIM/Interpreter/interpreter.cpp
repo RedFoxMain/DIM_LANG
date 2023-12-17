@@ -27,14 +27,14 @@ int main() {
 		}
 	}else{ file.close(); }
 	
-	auto start_time = std::chrono::high_resolution_clock::now();
+	auto start_time = std::chrono::system_clock::now();
 	Lexer lexer(text);
-	auto end_time = std::chrono::high_resolution_clock::now();
+	auto end_time = std::chrono::system_clock::now();
 
 	if (DEBUG) { PrintLexerResult(lexer.Lex()); }
 
-	std::chrono::duration<double, std::milli> duration = end_time - start_time;
+	std::chrono::duration<double> duration = end_time - start_time;
 
-	std::cout << "Выполнено без ошибок за: " << duration.count() << " милесекунд" << '\n'; // Лучшее время 0,2345 что в секундах равно 0,00023
+	std::cout << "Выполнено без ошибок за: " << duration.count() << " секунд" << '\n'; // Лучшее время 0,00023
 	return 0;
 }
