@@ -27,6 +27,7 @@ Token Lexer::GetString(int first_quote_position, int second_quote_position) {
 	}
 	// Если выводим
 	else {
+		--string_literals_count_;
 		structure_token.type = Type::TYPE_STRING;
 		structure_token.code = CODE_STRING_LITERALS[temp_string];
 		structure_token.value = temp_string;
@@ -84,10 +85,12 @@ Token Lexer::GetCommand() {
 		}
 		// Если есть выводим
 		else {
+			//--varible_count_;
 			structure_token.type = Type::TYPE_VARIBLE;
 			structure_token.code = CODE_VARIBLES[temp_string];
 			structure_token.value = temp_string;
 			structure_token.token_position = position_ - temp_string.length();
+			
 			return structure_token;
 		}
 	}
@@ -131,7 +134,7 @@ std::vector<Token> Lexer::Lex() {
 	int first_quote_position = -1, second_quote_position;
 
 	while (position_ < text_.length()) {
-
+		
 		// Пропустить пробелы
 		if (std::isspace(current_char_)) {
 			Advance();
