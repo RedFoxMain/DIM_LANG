@@ -9,11 +9,7 @@
 void PrintLexerResult(std::vector<Token> tokens) {
 	for (size_t i = 0; i < tokens.size(); ++i) {
 		std::cout << tokens[i].code << " ";
-		if (tokens[i].type == Type::TYPE_EOL) {
-			std::cout << '\n';
-		}
 	}
-	std::cout << '\n';
 }
 
 int main() {
