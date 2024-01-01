@@ -53,7 +53,7 @@ private:
 	std::map<char, std::string> SeparatorCode_ = {
 		{'{', "S1"}, {'}', "S2"}, {'(', "S3"},
 		{')', "S4"}, {';', "S5"}, {'\n', "S6"},
-		{'\t', "S7"}, {'[', "S8"}, {']', "S9"}
+		{'\t', "S7"}, {'[', "S8"}, {']', "S9"}, {'~', "S10"}
 	};
 	std::map<char, std::string> MathAndUnaryLogicOperationCode_ = {
 		{'+', "O1"}, {'-', "O2"}, {'/', "O3"},
