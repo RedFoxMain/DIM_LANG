@@ -7,7 +7,6 @@
 
 #include "tokens.h"
 
-
 class Lexer {
 public:
 	explicit Lexer(std::string& original_text) : text_(original_text) { Advance(); } // Конструктор
@@ -21,10 +20,10 @@ public:
 	Token GetCommand(); // Получить команду
 	Token GetDigit(); // Получить цыфру
 	std::vector<Token> Lex(); // Разобрать текст на токены
+
 private:
-	
 	// Зарегистрированные команды
-	std::string REGISTRY_COMMANDS_[17] = { "out", "in", "len", "while", "for", "if", "else", "boolean", "int", "float", "string", "null", "Main", "len", "or", "and"};
+	std::string REGISTRY_COMMANDS_[17] = { "out", "in", "len", "while", "for", "if", "else", "null", "Main", "len", "or", "and", "var"};
 	// Таблица токенов
 	std::map<char, Type> TOKEN_TABLE_ = {
 		{Math_Operation_Tokens::ADD_TOKEN, Type::TYPE_ADD},						// +
@@ -41,14 +40,15 @@ private:
 		{Barackets_Tokens::RFB_TOKEN, Type::TYPE_RFB},							// }
 		{Separator_Tokens::EOL_TOKEN, Type::TYPE_EOL},							// ;
 		{Separator_Tokens::COMMENT_TOKEN, Type::TYPE_COMMENT},					// ~
-		{Logic_Operation_Tokens::EQUAL_TOKEN, Type::TYPE_EQUAL}					// =
+		{Logic_Operation_Tokens::EQUAL_TOKEN, Type::TYPE_EQUAL},				// =
+		{Separator_Tokens::NEXT_LINE, Type::TYPE_NL}
 	};
-
 	std::map<std::string, std::string> WordsCode_ = {
 		{"out", "W1"}, {"in", "W2"}, {"if", "W3"},
 		{"else", "W4"}, {"while", "W5"}, {"for", "W6"},
-		{"len", "W7"}, {"int", "W8"}, {"float", "W9"},
-		{"bolean", "W10"}, {"null", "W11"}, {"Main", "W12"}
+		{"len", "W7"}, {"int", "W8"}, {"float", "W8"},
+		{"bolean", "W8"}, {"var", "W8"}, {"null", "W9"},
+		{"Main", "W10"}
 	};
 	std::map<char, std::string> SeparatorCode_ = {
 		{'{', "S1"}, {'}', "S2"}, {'(', "S3"},
