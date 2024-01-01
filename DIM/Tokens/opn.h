@@ -6,7 +6,7 @@
 std::map<std::string, std::string> OPN = {
 	{"W1", "std::cout"}, {"W2", "getline"}, {"W3", "if"},
 	{"W4", "else"},   {"W5", "while"},   {"W6", "for"},
-	{"W7", "size"}, {"W8", "printf"},  {"W9", "printf"},
+	{"W7", "size()"}, {"W8", "printf"},  {"W9", "printf"},
 	{"W8", "auto"}, {"W9", "null", }, {"W10", "Main"},
 	{"S1", "{"}, {"S2", "}"}, {"S3", "("}, {"S4", ")"},
 	{"S5", ";"}, {"S6", "\n"}, {"S7", "\t"}, {"S8", "["}, 
