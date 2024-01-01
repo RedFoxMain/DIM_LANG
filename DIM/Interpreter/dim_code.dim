@@ -1,10 +1,13 @@
 null Main(){
-	int num = 5;
+	var num = 5;
+	var a = 0;
 	if((num >= 5 or num < 10) and num != 9){
 		out "Yes";
-		num--;
+		a--;
 	}else{
-		out "No";
-		num++;
+		out "Yes"; ~ No
+		a++;
 	}
+	out "No";
+	out "Yes";
 }
