@@ -2,15 +2,8 @@
 #include <fstream> 
 #include <chrono>
 
-#define DEBUG true
-
 #include "lexer.h"
-
-void PrintLexerResult(std::vector<Token> tokens) {
-	for (size_t i = 0; i < tokens.size(); ++i) {
-		std::cout << tokens[i].code << " ";
-	}
-}
+#include "parser.h"
 
 int main() {
 	std::setlocale(LC_ALL, "Ru");
@@ -27,10 +20,11 @@ int main() {
 	Lexer lexer(text);
 	auto end_time = std::chrono::system_clock::now();
 
-	if (DEBUG) { PrintLexerResult(lexer.Lex()); }
+	Parser parser(lexer.Lex());
+	parser.TarnslateToCpp();
 
 	std::chrono::duration<double> duration = end_time - start_time;
 
-	std::cout << "Выполнено без ошибок за: " << duration.count() << " секунд" << '\n'; // Лучшее время 0,00023
+	std::cout << "Выполнено без ошибок за: " << duration.count() << " секунд" << '\n'; // Лучшее время 0,00022  
 	return 0;
 }
