@@ -16,3 +16,7 @@ std::map<std::string, std::string> OPN = {
 	{"L6", "=="}, {"L7", "!="}, {"L8", "||"}, {"L9", "&&"}, 
 	{"O6", "++"}, {"O7", "--"}
 };
+
+std::map<std::string, std::string> VARIBLES_CODE; // получить переменную по коду
+std::map<std::string, std::string> STRING_LITERALS_CODE; // получить строку по коду
+std::map<std::string, std::string> DIGITS_CODE; // получить цифру по коду
