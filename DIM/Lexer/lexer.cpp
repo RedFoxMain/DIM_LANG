@@ -1,6 +1,5 @@
 #include "lexer.h"
 #include "error.h"
-#include "opn.h"
 
 // Имплементация Advance
 void Lexer::Advance(int step) {
@@ -23,7 +22,7 @@ Token Lexer::GetString(int first_quote_position, int second_quote_position) {
 		structure_token.code = code;
 		structure_token.value = temp_string;
 		structure_token.token_position = position_ - text_.length();
-		CODE_STRING_LITERALS[temp_string] = "C" + std::to_string(string_literals_count_);
+		CODE_STRING_LITERALS[temp_string] = code;
 		return structure_token;
 	}
 	// Если выводим
@@ -31,12 +30,10 @@ Token Lexer::GetString(int first_quote_position, int second_quote_position) {
 		--string_literals_count_;
 		structure_token.type = Type::TYPE_STRING;
 		structure_token.code = CODE_STRING_LITERALS[temp_string];
-		STRING_LITERALS_CODE[code] = temp_string;
 		structure_token.value = temp_string;
 		structure_token.token_position = position_ - text_.length();
 		return structure_token;
 	}
-
 }
 
 // Имплементация GetCommand
@@ -90,7 +87,6 @@ Token Lexer::GetCommand() {
 			//--varible_count_;
 			structure_token.type = Type::TYPE_VARIBLE;
 			structure_token.code = CODE_VARIBLES[temp_string];
-			VARIBLES_CODE[code] = temp_string;
 			structure_token.value = temp_string;
 			structure_token.token_position = position_ - temp_string.length();
 			
@@ -117,7 +113,6 @@ Token Lexer::GetDigit() {
 		structure_token.value = temp_digit;
 		structure_token.token_position = position_ - temp_digit.length();
 		CODE_DIGITS[temp_digit] = code;
-		DIGITS_CODE[code] = temp_digit;
 		return structure_token;
 	}
 	// Если есть выводим
