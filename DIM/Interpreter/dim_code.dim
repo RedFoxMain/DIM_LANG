@@ -2,12 +2,12 @@ null Main(){
 	var num = 5;
 	var a = 0;
 	if((num >= 5 or num < 10) and num != 9){
-		out "Yes";
+		out ("Yes");
 		a--;
 	}else{
-		out "Yes"; ~ No
+		out ("Yes");
 		a++;
 	}
-	out "No";
-	out "Yes";
+	out ("No");
+	out ("Yes");
 }
