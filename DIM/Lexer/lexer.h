@@ -4,7 +4,6 @@
 #include <string>
 #include <map>
 #include <cctype>
-
 #include "tokens.h"
 
 class Lexer {
@@ -15,6 +14,7 @@ public:
 	std::map<std::string, std::string> CODE_VARIBLES; // Сигнатуры переменных в DIM коде
 	std::map<std::string, std::string> CODE_STRING_LITERALS; // Сигнатуры строк в DIM коде
 	std::map<std::string, std::string> CODE_DIGITS; // Сигнатуры цифр в DIM коде
+
 	void Advance(int step = 1); // Следующий символ
 	Token GetString(int first_quote_position, int second_quote_position); // Получить строку
 	Token GetCommand(); // Получить команду
@@ -46,8 +46,7 @@ private:
 	std::map<std::string, std::string> WordsCode_ = {
 		{"out", "W1"}, {"in", "W2"}, {"if", "W3"},
 		{"else", "W4"}, {"while", "W5"}, {"for", "W6"},
-		{"len", "W7"}, {"int", "W8"}, {"float", "W8"},
-		{"bolean", "W8"}, {"var", "W8"}, {"null", "W9"},
+		{"len", "W7"}, {"var", "W8"}, {"null", "W9"},
 		{"Main", "W10"}
 	};
 	std::map<char, std::string> SeparatorCode_ = {
