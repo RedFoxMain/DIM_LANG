@@ -8,13 +8,12 @@
 
 class Lexer {
 public:
-	explicit Lexer(std::string& original_text) : text_(original_text) { Advance(); } // Конструктор
+	Lexer(std::string& original_text) : text_(original_text) { Advance(); } // Конструктор
 	~Lexer() {} // Деструктор
 	Token structure_token; // Структура токена
 	std::map<std::string, std::string> CODE_VARIBLES; // Сигнатуры переменных в DIM коде
 	std::map<std::string, std::string> CODE_STRING_LITERALS; // Сигнатуры строк в DIM коде
 	std::map<std::string, std::string> CODE_DIGITS; // Сигнатуры цифр в DIM коде
-
 	void Advance(int step = 1); // Следующий символ
 	Token GetString(int first_quote_position, int second_quote_position); // Получить строку
 	Token GetCommand(); // Получить команду
