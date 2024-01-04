@@ -21,6 +21,9 @@ int main() {
 	auto end_time = std::chrono::system_clock::now();
 
 	Parser parser(lexer.Lex());
+	parser.GetStrings(lexer.CODE_STRING_LITERALS);
+	parser.GetDigits(lexer.CODE_DIGITS);
+	parser.GetVaribles(lexer.CODE_VARIBLES);
 	parser.TarnslateToCpp();
 
 	std::chrono::duration<double> duration = end_time - start_time;
@@ -28,3 +31,4 @@ int main() {
 	std::cout << "Выполнено без ошибок за: " << duration.count() << " секунд" << '\n'; // Лучшее время 0,00022  
 	return 0;
 }
+
