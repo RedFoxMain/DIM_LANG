@@ -40,7 +40,7 @@ Token Lexer::GetString(int first_quote_position, int second_quote_position) {
 Token Lexer::GetCommand() {
 	std::string temp_string = "";
 
-	while (std::isalpha(current_char_)) {
+	while (std::isalpha(current_char_) || std::isdigit(current_char_)) {
 		temp_string += current_char_;
 		Advance();
 	}
