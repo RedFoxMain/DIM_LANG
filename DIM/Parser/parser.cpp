@@ -19,7 +19,12 @@ void Parser::GetVaribles(std::map<std::string, std::string>& varibles) {
 	}
 }
 
-void Parser::MakeFile(std::string data) {
+bool Parser::InVector(std::vector<std::string> list, std::string& word) {
+	bool in_vector = (std::find(begin(list), end(list), word) != end(list)) ? true : false;
+	return in_vector;
+}
+
+void Parser::MakeFile(std::string& data) {
 	std::ofstream out;
 	out.open("release.cpp");
 	if (out.is_open())
@@ -31,13 +36,19 @@ void Parser::MakeFile(std::string data) {
 
 void Parser::TarnslateToCpp() {
 	std::string cpp_code = "#include <iostream>\n";
-	for (const auto& el: hiddenData_) {
-		cpp_code += STRING_LITERALS_CODE_[el.code];
-		cpp_code += DIGITS_CODE_[el.code];
-		cpp_code += VARIBLES_CODE_[el.code];
-		cpp_code += OPN[el.code];
-		if (el.type == Type::TYPE_EOL || el.type == Type::TYPE_RFB || el.type == Type::TYPE_LFB) { cpp_code += "\n"; }
+	for (size_t index = 0; index < hiddenData_.size(); ++index) {
+		int nextIndex = index + 1;
+		cpp_code += STRING_LITERALS_CODE_[hiddenData_[index].code];
+		cpp_code += DIGITS_CODE_[hiddenData_[index].code];
+		cpp_code += VARIBLES_CODE_[hiddenData_[index].code];
+		cpp_code += OPN[hiddenData_[index].code];
+		if (hiddenData_[index].type == Type::TYPE_RRB && !InVector({"{", "or", "and" }, hiddenData_[nextIndex].value)) { cpp_code += ";"; }
+		if ((hiddenData_[index].type == Type::TYPE_INT || hiddenData_[index].type == Type::TYPE_FLOAT) && !InVector({")", "or", "and" }, hiddenData_[nextIndex].value)) { cpp_code += ";";}
+		if (hiddenData_[index].type == Type::TYPE_INCREMENT || hiddenData_[index].type == Type::TYPE_DECREMENT) { cpp_code += ";"; }
+		//if (InVector({ ";", "{", "}" }, hiddenData_[index].value)) { cpp_code += "\n"; }
+		
 		cpp_code += " ";
 	}
 	MakeFile(cpp_code);
+	
 }
