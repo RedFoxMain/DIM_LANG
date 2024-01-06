@@ -45,8 +45,6 @@ void Parser::TarnslateToCpp() {
 		if (hiddenData_[index].type == Type::TYPE_RRB && !InVector({"{", "or", "and" }, hiddenData_[nextIndex].value)) { cpp_code += ";"; }
 		if ((hiddenData_[index].type == Type::TYPE_INT || hiddenData_[index].type == Type::TYPE_FLOAT) && !InVector({")", "or", "and" }, hiddenData_[nextIndex].value)) { cpp_code += ";";}
 		if (hiddenData_[index].type == Type::TYPE_INCREMENT || hiddenData_[index].type == Type::TYPE_DECREMENT) { cpp_code += ";"; }
-		//if (InVector({ ";", "{", "}" }, hiddenData_[index].value)) { cpp_code += "\n"; }
-		
 		cpp_code += " ";
 	}
 	MakeFile(cpp_code);
