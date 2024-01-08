@@ -1,13 +1,7 @@
-null Main(){
-	var num = 5
-	var a = 0
-	if((num >= 5 or num < 10) and num != 9){
-		out ("Yes\n")
-		a--
-	}else{
-		out ("Yes\n")
-		a++
-	}
-	out ("No\n")
-	out ("Yes\n")
+var num1 = 12
+var num2 = 17
+if(num1 == num2){
+	out("Они равны!")
+}else{
+	out("Они не равны!")
 }
