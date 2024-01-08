@@ -21,7 +21,7 @@ private:
 	std::map<std::string, std::string> DIGITS_CODE_;
 	// (ОПН) Обратная Польская Нотация
 	std::map<std::string, std::string> OPN = {
-	{"W1", "printf"}, {"W2", "getline"}, {"W3", "if"},
+	{"W1", "std::cout << "}, {"W2", "getline"}, {"W3", "if"},
 	{"W4", "else"},   {"W5", "while"},   {"W6", "for"},
 	{"W7", "size()"}, {"W8", "auto"},  {"W9", "void"},
 	{"W10", "main"}, {"S1", "{"}, {"S2", "}"}, 
