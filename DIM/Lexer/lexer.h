@@ -22,7 +22,7 @@ public:
 
 private:
 	// Зарегистрированные команды
-	std::string REGISTRY_COMMANDS_[17] = { "out", "in", "len", "while", "for", "if", "else", "null", "Main", "len", "or", "and", "var"};
+	std::string REGISTRY_COMMANDS_[17] = { "out", "in", "len", "while", "for", "if", "else", "len", "or", "and", "var"};
 	// Таблица токенов
 	std::map<char, Type> TOKEN_TABLE_ = {
 		{Math_Operation_Tokens::ADD_TOKEN, Type::TYPE_ADD},						// +
@@ -45,8 +45,7 @@ private:
 	std::map<std::string, std::string> WordsCode_ = {
 		{"out", "W1"}, {"in", "W2"}, {"if", "W3"},
 		{"else", "W4"}, {"while", "W5"}, {"for", "W6"},
-		{"len", "W7"}, {"var", "W8"}, {"null", "W9"},
-		{"Main", "W10"}
+		{"len", "W7"}, {"var", "W8"}
 	};
 	std::map<char, std::string> SeparatorCode_ = {
 		{'{', "S1"}, {'}', "S2"}, {'(', "S3"},
