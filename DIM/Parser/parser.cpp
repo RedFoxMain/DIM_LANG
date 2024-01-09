@@ -26,7 +26,7 @@ bool Parser::InVector(std::vector<std::string> list, std::string& word) {
 
 void Parser::MakeFile(std::string& data) {
 	std::ofstream out;
-	out.open("release.h");
+	out.open("release.cpp");
 	if (out.is_open()) { out << data << "}"; }
 	out.close();
 }
