@@ -1,6 +1,5 @@
-#pragma once
-#include <map>
-#include <string>
+#ifndef TOKENS_H
+#define TOKENS_H
 
 // Тип токена
 enum Type {
@@ -12,6 +11,7 @@ enum Type {
 	TYPE_COMMAND,			// зарезервированная комманда
 	TYPE_COMMENT,			// комментарий
 	TYPE_EOL,				// тип конец строки
+	TYPE_COMMA,				// тип запятая
 	TYPE_QUOTE,				// тип кавычки
 	TYPE_SUBDIVIDE,			// тип математических операций
 	TYPE_ADD,
@@ -33,7 +33,8 @@ enum Type {
 	TYPE_LRB,				// (
 	TYPE_RRB,				// )
 	TYPE_LFB,				// {
-	TYPE_RFB				// }
+	TYPE_RFB,				// }
+	TYPE_NL
 };
 
 // Сама структура токена
@@ -81,13 +82,15 @@ enum Barackets_Tokens {
 enum Separator_Tokens {
 	// Коментарии
 	COMMENT_TOKEN		= 126,
-
-	// Dot
+	// Точка
 	DOT_TOKEN			= 46,
-
+	// Запятая
+	COMMA_TOKEN			= 44,
 	// Quote
 	QUOTE_TOKEN			= 34,
-
-	// End of line
-	EOL_TOKEN			= 59
+	// Конец динии
+	EOL_TOKEN			= 59,
+	// Следущая линия
+	NEXT_LINE = 10
 };
+#endif // !TOKENS_H
