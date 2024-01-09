@@ -40,7 +40,8 @@ private:
 		{Separator_Tokens::EOL_TOKEN, Type::TYPE_EOL},							// ;
 		{Separator_Tokens::COMMENT_TOKEN, Type::TYPE_COMMENT},					// ~
 		{Logic_Operation_Tokens::EQUAL_TOKEN, Type::TYPE_EQUAL},				// =
-		{Separator_Tokens::NEXT_LINE, Type::TYPE_NL}
+		{Separator_Tokens::NEXT_LINE, Type::TYPE_NL},
+		{Separator_Tokens::COMMA_TOKEN, Type::TYPE_COMMA}
 	};
 	std::map<std::string, std::string> WordsCode_ = {
 		{"out", "W1"}, {"in", "W2"}, {"if", "W3"},
@@ -50,7 +51,8 @@ private:
 	std::map<char, std::string> SeparatorCode_ = {
 		{'{', "S1"}, {'}', "S2"}, {'(', "S3"},
 		{')', "S4"}, {';', "S5"}, {'\n', "S6"},
-		{'\t', "S7"}, {'[', "S8"}, {']', "S9"}, {'~', "S10"}
+		{'\t', "S7"}, {'[', "S8"}, {']', "S9"}, {'~', "S10"},
+		{',',"S11"}
 	};
 	std::map<char, std::string> MathAndUnaryLogicOperationCode_ = {
 		{'+', "O1"}, {'-', "O2"}, {'/', "O3"},
