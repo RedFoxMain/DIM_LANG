@@ -26,13 +26,13 @@ bool Parser::InVector(std::vector<std::string> list, std::string& word) {
 
 void Parser::MakeFile(std::string& data) {
 	std::ofstream out;
-	out.open("release.cpp");
+	out.open("release.h");
 	if (out.is_open()) { out << data << "}"; }
 	out.close();
 }
 
 void Parser::TarnslateToCpp() {
-	std::string cpp_code = "#include <iostream>\nint main () { std::setlocale(LC_ALL, \"Ru\"); ";
+	std::string cpp_code = "#include <iostream>\nint main() { std::setlocale(LC_ALL, \"Ru\"); ";
 	for (size_t index = 0; index < hiddenData_.size(); ++index) {
 		int nextIndex = index + 1;
 		cpp_code += STRING_LITERALS_CODE_[hiddenData_[index].code];
@@ -41,9 +41,9 @@ void Parser::TarnslateToCpp() {
 		cpp_code += OPN[hiddenData_[index].code];
 		if (hiddenData_[index].type == Type::TYPE_RRB && !InVector({"{", "or", "and" }, hiddenData_[nextIndex].value)) { cpp_code += ";"; }
 		if ((hiddenData_[index].type == Type::TYPE_INT || hiddenData_[index].type == Type::TYPE_FLOAT) && !InVector({")", "or", "and" }, hiddenData_[nextIndex].value)) { cpp_code += ";";}
+		if (hiddenData_[index].type == Type::TYPE_STRING && !InVector({ ")", "or", "and" }, hiddenData_[nextIndex].value)) { cpp_code += ";"; }
 		if (hiddenData_[index].type == Type::TYPE_INCREMENT || hiddenData_[index].type == Type::TYPE_DECREMENT) { cpp_code += ";"; }
 		cpp_code += " ";
 	}
 	MakeFile(cpp_code);
-	//std::system("release.cpp");
 }
